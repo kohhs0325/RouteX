@@ -78,32 +78,6 @@ def estimate_time(distance):
     return (distance / speed) * 60
 
 
-# =========================
-# 🔥 LOCAL fallback 모델
-# =========================
-def use_local_model(start, end):
-
-    start_loc = search_place(start)
-    end_loc = search_place(end)
-
-    if not start_loc or not end_loc:
-        return {
-            "mode": "LOCAL",
-            "error": "카카오 좌표 변환 실패"
-        }
-
-    distance = get_distance(start_loc, end_loc)
-    time = estimate_time(distance)
-
-    return {
-        "mode": "LOCAL",
-        "route": [
-            start_loc["name"],
-            end_loc["name"]
-        ],
-        "distance_km": round(distance, 2),
-        "total_time_min": round(time, 1)
-    }
 
 
 # =========================
@@ -156,7 +130,33 @@ def use_odsay(start, end):
 
     except:
         return None
+        
+# =========================
+# 🔥 LOCAL fallback 모델
+# =========================
+def use_local_model(start, end):
 
+    start_loc = search_place(start)
+    end_loc = search_place(end)
+
+    if not start_loc or not end_loc:
+        return {
+            "mode": "LOCAL",
+            "error": "카카오 좌표 변환 실패"
+        }
+
+    distance = get_distance(start_loc, end_loc)
+    time = estimate_time(distance)
+
+    return {
+        "mode": "LOCAL",
+        "route": [
+            start_loc["name"],
+            end_loc["name"]
+        ],
+        "distance_km": round(distance, 2),
+        "total_time_min": round(time, 1)
+    }
 
 # =========================
 # 🚀 메인 API (핵심)
