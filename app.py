@@ -132,13 +132,25 @@ def use_odsay(start, end):
         res = requests.get(url, params=params, timeout=3)
         data = res.json()
 
-        # ODsay 실패 판단
         if "error" in data or "result" not in data:
             return None
 
-        # 경로 추출 (간단 버전)
+        # =========================
+        # 🔥 경로 추출 핵심
+        # =========================
+        path = data["result"]["path"][0]["subPath"]
+
+        route = []
+
+        for p in path:
+            if p["trafficType"] == 1:  # 지하철
+                route.append(p["startName"])
+
+        route.append(path[-1]["endName"])
+
         return {
             "mode": "ODsay",
+            "route": route,
             "raw": data
         }
 
