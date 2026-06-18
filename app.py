@@ -86,14 +86,14 @@ def estimate_time(distance):
 def use_odsay(start, end, waypoints):
 
     print("===== ODsay 함수 진입 =====")
-    print("start =", start)
-    print("end =", end)
+    print("start =", start, flush=True)
+    print("end =", end, flush=True)
     
     start_loc = search_place(start)
     end_loc = search_place(end)
 
-    print("start_loc =", start_loc)
-    print("end_loc =", end_loc)
+    print("start_loc =", start_loc, flush=True)
+    print("end_loc =", end_loc, flush=True)
 
     if not start_loc or not end_loc:
         return None
@@ -212,7 +212,11 @@ def route():
     # =========================
     # 1️⃣ ODSay 먼저 시도
     # =========================
+    print("ODsay 호출 직전", flush=True)
+    
     result = use_odsay(start, end, waypoints)
+
+    print("ODsay 호출 직후", flush=True)
 
     if result:
         return jsonify(result)
