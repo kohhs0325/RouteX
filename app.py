@@ -193,7 +193,7 @@ def use_local_model(start, end, waypoints):
 @app.route("/route", methods=["POST"])
 def route():
 
-    print("### ROUTE 함수 실행 ###")
+    print("### ROUTE 함수 실행 ###", flush=True)
 
     data = request.json
     
