@@ -88,6 +88,7 @@ def use_odsay(start, end, waypoints):
     print("===== ODsay 함수 진입 =====")
     print("start =", start, flush=True)
     print("end =", end, flush=True)
+    print("ODSAY_KEY =", ODSAY_KEY, flush=True)
     
     start_loc = search_place(start)
     end_loc = search_place(end)
