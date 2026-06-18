@@ -116,20 +116,23 @@ def use_odsay(start, end):
 
         route = []
 
-        for p in path:
-            if p["trafficType"] == 1:  # 지하철
-                route.append(p["startName"])
+for p in path:
 
-        route.append(path[-1]["endName"])
+    if p["trafficType"] == 1:
 
-        return {
-            "mode": "ODsay",
-            "route": route,
-            "raw": data
-        }
+        start_station = p.get("startName", "")
+        lane = p.get("lane", [])
 
-    except:
-        return None
+        line_name = ""
+
+        if lane:
+            line_name = lane[0].get("name", "")
+
+        route.append(f"{start_station} ({line_name})")
+
+
+if path:
+    route.append(path[-1].get("endName", "도착"))
         
 # =========================
 # 🔥 LOCAL fallback 모델
@@ -150,10 +153,10 @@ def use_local_model(start, end):
 
     return {
         "mode": "LOCAL",
-        "route": [
-            start_loc["name"],
-            end_loc["name"]
-        ],
+       "route": [
+    f"{start_loc['name']} (출발)",
+    f"{end_loc['name']} (도착)"
+],
         "distance_km": round(distance, 2),
         "total_time_min": round(time, 1)
     }
