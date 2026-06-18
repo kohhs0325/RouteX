@@ -115,8 +115,8 @@ def use_odsay(start, end):
         path = data["result"]["path"][0]["subPath"]
 
         route = []
-
-for p in path:
+        
+        for p in path:
 
     if p["trafficType"] == 1:
 
@@ -133,6 +133,9 @@ for p in path:
 
 if path:
     route.append(path[-1].get("endName", "도착"))
+
+
+
         
 # =========================
 # 🔥 LOCAL fallback 모델
