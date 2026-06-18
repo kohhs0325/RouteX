@@ -201,9 +201,9 @@ def route():
     end = data.get("end")
     waypoints = data.get("waypoints", [])
 
-    print("출발:", start)
-    print("방문지:", waypoints)
-    print("도착:", end)
+    print("출발:", start, flush=True)
+    print("방문지:", waypoints, flush=True)
+    print("도착:", end, flush=True)
 
     if not start or not end:
         return jsonify({"error": "start / end 필요"}), 400
