@@ -101,48 +101,44 @@ def use_odsay(start, end):
         "EY": end_loc["y"],
         "SearchPathType": 0
     }
-    
-# =========================
-# 🔥 경로 추출 핵심
-# =========================   
 
-try:
-    res = requests.get(url, params=params, timeout=3)
-    data = res.json()
+    try:
+        res = requests.get(url, params=params, timeout=3)
+        data = res.json()
 
-    if "error" in data or "result" not in data:
+        if "error" in data or "result" not in data:
+            return None
+
+        path = data["result"]["path"][0]["subPath"]
+
+        route = []
+
+        for p in path:
+
+            if p["trafficType"] == 1:
+
+                start_station = p.get("startName", "")
+                lane = p.get("lane", [])
+
+                line_name = ""
+
+                if lane:
+                    line_name = lane[0].get("name", "")
+
+                route.append(f"{start_station} ({line_name})")
+
+        if path:
+            route.append(path[-1].get("endName", "도착"))
+
+        return {
+            "mode": "ODsay",
+            "route": route,
+            "raw": data
+        }
+
+    except Exception as e:
+        print("ODsay 오류:", e)
         return None
-
-    path = data["result"]["path"][0]["subPath"]
-
-    route = []
-
-    for p in path:
-
-        if p["trafficType"] == 1:
-
-            start_station = p.get("startName", "")
-            lane = p.get("lane", [])
-
-            line_name = ""
-
-            if lane:
-                line_name = lane[0].get("name", "")
-
-            route.append(f"{start_station} ({line_name})")
-
-    if path:
-        route.append(path[-1].get("endName", "도착"))
-
-    return {
-        "mode": "ODsay",
-        "route": route,
-        "raw": data
-    }
-
-except Exception as e:
-    print("ODsay 오류:", e)
-    return None
 
         
 # =========================
