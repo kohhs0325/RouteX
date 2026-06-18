@@ -144,7 +144,7 @@ def use_odsay(start, end):
 # =========================
 # 🔥 LOCAL fallback 모델
 # =========================
-def use_local_model(start, end):
+def use_local_model(start, end, waypoints):
 
     start_loc = search_place(start)
     end_loc = search_place(end)
@@ -158,12 +158,20 @@ def use_local_model(start, end):
     distance = get_distance(start_loc, end_loc)
     time = estimate_time(distance)
 
+    route = [
+        f"{start_loc['name']} (출발)"
+    ]
+
+    for wp in waypoints:
+        route.append(wp)
+
+    route.append(
+        f"{end_loc['name']} (도착)"
+    )
+
     return {
         "mode": "LOCAL",
-       "route": [
-    f"{start_loc['name']} (출발)",
-    f"{end_loc['name']} (도착)"
-],
+        "route": route,
         "distance_km": round(distance, 2),
         "total_time_min": round(time, 1)
     }
@@ -175,8 +183,14 @@ def use_local_model(start, end):
 def route():
 
     data = request.json
+    
     start = data.get("start")
     end = data.get("end")
+    waypoints = data.get("waypoints", [])
+
+    print("출발:", start)
+    print("방문지:", waypoints)
+    print("도착:", end)
 
     if not start or not end:
         return jsonify({"error": "start / end 필요"}), 400
@@ -185,7 +199,7 @@ def route():
     # =========================
     # 1️⃣ ODSay 먼저 시도
     # =========================
-    result = use_odsay(start, end)
+    result = use_odsay(start, end, waypoints)
 
     if result:
         return jsonify(result)
@@ -194,7 +208,7 @@ def route():
     # =========================
     # 2️⃣ fallback (카카오 + LOCAL)
     # =========================
-    result = use_local_model(start, end)
+    result = use_local_model(start, end, waypoints)
     result["mode"] = "FALLBACK"
 
     return jsonify(result)
