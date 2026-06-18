@@ -101,18 +101,19 @@ def use_odsay(start, end):
         "EY": end_loc["y"],
         "SearchPathType": 0
     }
+    
+# =========================
+# 🔥 경로 추출 핵심
+# =========================   
 
-    try:
-        res = requests.get(url, params=params, timeout=3)
-        data = res.json()
+try:
+    res = requests.get(url, params=params, timeout=3)
+    data = res.json()
 
-        if "error" in data or "result" not in data:
-            return None
+    if "error" in data or "result" not in data:
+        return None
 
-        # =========================
-        # 🔥 경로 추출 핵심
-        # =========================
-       path = data["result"]["path"][0]["subPath"]
+    path = data["result"]["path"][0]["subPath"]
 
     route = []
 
@@ -142,7 +143,6 @@ def use_odsay(start, end):
 except Exception as e:
     print("ODsay 오류:", e)
     return None
-
 
         
 # =========================
