@@ -106,7 +106,7 @@ def use_odsay(start, end, waypoints):
         res = requests.get(url, params=params, timeout=3)
         
         print("ODsay 상태:", res.status_code)
-         print("ODsay 응답:", res.text)
+        print("ODsay 응답:", res.text)
 
         data = res.json()
 
