@@ -8,7 +8,7 @@ app = Flask(__name__)
 # 🔑 API KEY
 # =========================
 KAKAO_KEY = "6e365680936819c2e656e6cebede3ce8"
-ODSAY_KEY = "Pejc1OV1MLi4FAwEp7Xt6w"
+ODSAY_KEY = "xkOfzY5Wfc0DJqF4KQc023zQxBwBQAkXpRmx3A/xzWY"
 
 # =========================
 # 🔥 카카오 장소 → 좌표
