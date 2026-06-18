@@ -104,6 +104,10 @@ def use_odsay(start, end, waypoints):
 
     try:
         res = requests.get(url, params=params, timeout=3)
+        
+        print("ODsay 상태:", res.status_code)
+         print("ODsay 응답:", res.text)
+
         data = res.json()
 
         if "error" in data or "result" not in data:
