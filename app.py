@@ -83,7 +83,7 @@ def estimate_time(distance):
 # =========================
 # 🔥 ODSay 모델
 # =========================
-def use_odsay(start, end):
+def use_odsay(start, end, waypoints):
 
     start_loc = search_place(start)
     end_loc = search_place(end)
