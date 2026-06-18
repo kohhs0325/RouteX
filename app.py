@@ -85,8 +85,15 @@ def estimate_time(distance):
 # =========================
 def use_odsay(start, end, waypoints):
 
+    print("===== ODsay 함수 진입 =====")
+    print("start =", start)
+    print("end =", end)
+    
     start_loc = search_place(start)
     end_loc = search_place(end)
+
+    print("start_loc =", start_loc)
+    print("end_loc =", end_loc)
 
     if not start_loc or not end_loc:
         return None
